@@ -12,25 +12,31 @@ const Statistics = ({ model }) => {
     return (
         <>
             <h1>Statistics</h1>
-            <div>
-                <StatisticLine label="Good" value={model.good} />
-                <StatisticLine label="Neutral" value={model.neutral} />
-                <StatisticLine label="Bad" value={model.bad} />
-            </div>
-            <div>
-                <StatisticLine label="All" value={model.all} />
-                <StatisticLine label="Average" value={model.avg} />
-                <StatisticLine label="Positive" value={model.positive + "%"} />
-            </div>
+            <table>
+                <tbody>
+                    <StatisticLine label="Good" value={model.good} />
+                    <StatisticLine label="Neutral" value={model.neutral} />
+                    <StatisticLine label="Bad" value={model.bad} />
+                </tbody>
+                <tfoot>
+                    <StatisticLine label="All" value={model.all} />
+                    <StatisticLine label="Average" value={model.avg} />
+                    <StatisticLine
+                        label="Positive"
+                        value={model.positive + "%"}
+                    />
+                </tfoot>
+            </table>
         </>
     );
 };
 
 const StatisticLine = (props) => {
     return (
-        <p>
-            {props.label} {props.value}
-        </p>
+        <tr>
+            <td>{props.label}</td>
+            <td>{props.value}</td>
+        </tr>
     );
 };
 
@@ -61,8 +67,8 @@ const App = () => {
         neutral: neutral,
         bad: bad,
         all: all,
-        avg: avg,
-        positive: positive,
+        avg: avg.toFixed(2),
+        positive: positive.toFixed(2),
     };
 
     return (
