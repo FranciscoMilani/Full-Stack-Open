@@ -13,20 +13,20 @@ const Statistics = ({ model }) => {
         <>
             <h1>Statistics</h1>
             <div>
-                <Statistic label="Good" value={model.good} />
-                <Statistic label="Neutral" value={model.neutral} />
-                <Statistic label="Bad" value={model.bad} />
+                <StatisticLine label="Good" value={model.good} />
+                <StatisticLine label="Neutral" value={model.neutral} />
+                <StatisticLine label="Bad" value={model.bad} />
             </div>
             <div>
-                <Statistic label="All" value={model.all} />
-                <Statistic label="Average" value={model.avg} />
-                <Statistic label="Positive" value={model.positive + "%"} />
+                <StatisticLine label="All" value={model.all} />
+                <StatisticLine label="Average" value={model.avg} />
+                <StatisticLine label="Positive" value={model.positive + "%"} />
             </div>
         </>
     );
 };
 
-const Statistic = (props) => {
+const StatisticLine = (props) => {
     return (
         <p>
             {props.label} {props.value}
