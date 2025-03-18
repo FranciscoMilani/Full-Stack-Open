@@ -7,7 +7,6 @@ const Button = (props) => (
 );
 
 const App = () => {
-    // save clicks of each button to its own state
     const [good, setGood] = useState(0);
     const [neutral, setNeutral] = useState(0);
     const [bad, setBad] = useState(0);
@@ -24,6 +23,11 @@ const App = () => {
         setBad(bad + 1);
     };
 
+    const all = good + neutral + bad;
+    const normalizedCount = Math.max(all, 1);
+    const avg = (good + bad * -1) / normalizedCount;
+    const positive = (good / normalizedCount) * 100;
+
     return (
         <div>
             <h1>Give Feedback</h1>
@@ -36,6 +40,11 @@ const App = () => {
                 <p>Good {good}</p>
                 <p>Neutral {neutral}</p>
                 <p>Bad {bad}</p>
+            </div>
+            <div>
+                <p>All {all}</p>
+                <p>Average {avg}</p>
+                <p>Positive {positive}%</p>
             </div>
         </div>
     );
