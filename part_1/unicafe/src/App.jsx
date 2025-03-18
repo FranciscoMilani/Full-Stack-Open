@@ -6,7 +6,27 @@ const Button = (props) => (
     </button>
 );
 
-const Statistics = (props) => {
+const Statistics = ({ model }) => {
+    if (model.all === 0) return <p>No feedback given</p>;
+
+    return (
+        <>
+            <h1>Statistics</h1>
+            <div>
+                <Statistic label="Good" value={model.good} />
+                <Statistic label="Neutral" value={model.neutral} />
+                <Statistic label="Bad" value={model.bad} />
+            </div>
+            <div>
+                <Statistic label="All" value={model.all} />
+                <Statistic label="Average" value={model.avg} />
+                <Statistic label="Positive" value={model.positive + "%"} />
+            </div>
+        </>
+    );
+};
+
+const Statistic = (props) => {
     return (
         <p>
             {props.label} {props.value}
@@ -36,6 +56,15 @@ const App = () => {
     const avg = (good + bad * -1) / normalizedCount;
     const positive = (good / normalizedCount) * 100;
 
+    const statisticModel = {
+        good: good,
+        neutral: neutral,
+        bad: bad,
+        all: all,
+        avg: avg,
+        positive: positive,
+    };
+
     return (
         <div>
             <h1>Give Feedback</h1>
@@ -44,17 +73,8 @@ const App = () => {
                 <Button onClick={setNeutralHandler} text="Neutral" />
                 <Button onClick={setBadHandler} text="Bad" />
             </div>
-
-            <h1>Statistics</h1>
             <div>
-                <Statistics label="Good" value={good} />
-                <Statistics label="Neutral" value={neutral} />
-                <Statistics label="Bad" value={bad} />
-            </div>
-            <div>
-                <Statistics label="All" value={all} />
-                <Statistics label="Average" value={avg} />
-                <Statistics label="Positive" value={positive + "%"} />
+                <Statistics model={statisticModel} />
             </div>
         </div>
     );
