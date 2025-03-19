@@ -4,6 +4,16 @@ const Button = (props) => {
     return <button onClick={props.onClick}>{props.text}</button>;
 };
 
+const AnecdoteSection = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <p>{props.description}</p>
+            <p>has {props.votes} votes</p>
+        </div>
+    );
+};
+
 const App = () => {
     const anecdotes = [
         "If it hurts, do it more often.",
@@ -20,10 +30,12 @@ const App = () => {
     const [score, setScore] = useState(new Array(anecdotes.length).fill(0));
 
     const nextHandler = () => {
-        const rnd = Math.floor(Math.random() * anecdotes.length);
-        const index =
-            rnd == selected ? ((rnd + 1) % anecdotes.length) + 1 : rnd;
-        setSelected(index);
+        let rnd;
+        do {
+            rnd = Math.floor(Math.random() * anecdotes.length);
+        } while (rnd === selected);
+
+        setSelected(rnd);
     };
 
     const voteHandler = () => {
@@ -32,18 +44,35 @@ const App = () => {
         setScore(tempScore);
     };
 
+    let mostVoted = score.reduce(
+        (highestIndex, currVotes, currIndex) =>
+            currVotes > score[highestIndex] ? currIndex : highestIndex,
+        0
+    );
+
     return (
-        <div>
+        <>
             <div>
-                <Button onClick={voteHandler} text="Vote" />
-                <Button onClick={nextHandler} text="Next anecdote" />
+                <div>
+                    <Button onClick={voteHandler} text="Vote" />
+                    <Button onClick={nextHandler} text="Next anecdote" />
+                </div>
+                <div>
+                    <AnecdoteSection
+                        title="Anecdote of the day"
+                        description={anecdotes[selected]}
+                        votes={score[selected]}
+                    />
+                </div>
             </div>
             <div>
-                {anecdotes[selected]}
-                <br />
-                has {score[selected]} votes
+                <AnecdoteSection
+                    title="Anecdote with most votes"
+                    description={anecdotes[mostVoted]}
+                    votes={score[mostVoted]}
+                />
             </div>
-        </div>
+        </>
     );
 };
 
