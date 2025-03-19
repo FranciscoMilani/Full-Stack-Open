@@ -1,12 +1,10 @@
 import { useState } from "react";
 
 const Button = (props) => {
-    return <button onClick={props.onClick}>Next anecdote</button>;
+    return <button onClick={props.onClick}>{props.text}</button>;
 };
 
 const App = () => {
-    const [selected, setSelected] = useState(0);
-
     const anecdotes = [
         "If it hurts, do it more often.",
         "Adding manpower to a late software project makes it later!",
@@ -18,16 +16,33 @@ const App = () => {
         "The only way to go fast, is to go well.",
     ];
 
-    const eventHandler = () => {
+    const [selected, setSelected] = useState(0);
+    const [score, setScore] = useState(new Array(anecdotes.length).fill(0));
+
+    const nextHandler = () => {
         const rnd = Math.floor(Math.random() * anecdotes.length);
-        setSelected(rnd);
+        const index =
+            rnd == selected ? ((rnd + 1) % anecdotes.length) + 1 : rnd;
+        setSelected(index);
+    };
+
+    const voteHandler = () => {
+        const tempScore = [...score];
+        tempScore[selected] += 1;
+        setScore(tempScore);
     };
 
     return (
         <div>
-            <Button onClick={eventHandler} />
-            <br />
-            {anecdotes[selected]}
+            <div>
+                <Button onClick={voteHandler} text="Vote" />
+                <Button onClick={nextHandler} text="Next anecdote" />
+            </div>
+            <div>
+                {anecdotes[selected]}
+                <br />
+                has {score[selected]} votes
+            </div>
         </div>
     );
 };
