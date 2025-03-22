@@ -15,11 +15,17 @@ const Course = (props) => {
 
 const Content = (props) => {
     const { courseParts } = props;
+    const sum = courseParts.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.exercises,
+        0
+    );
+
     return (
         <div>
             {courseParts.map((x) => (
                 <Part key={x.id} part={x} />
             ))}
+            <Total total={sum} />
         </div>
     );
 };
