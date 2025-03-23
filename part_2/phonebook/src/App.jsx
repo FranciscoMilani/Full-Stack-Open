@@ -7,7 +7,12 @@ const App = () => {
 
     const addNumberHandler = (event) => {
         event.preventDefault();
+
         if (!newName) return;
+        if (persons.some((x) => x.name === newName)) {
+            alert(`${newName} is already added to phonebook`);
+            return;
+        }
 
         const newNameObj = {
             name: newName,
