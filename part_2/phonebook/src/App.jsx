@@ -2,11 +2,19 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 
 const App = () => {
-    const [persons, setPersons] = useState([
-        { name: "Arto Hellas", phone: "040-1234567" },
-    ]);
     const [newName, setNewName] = useState("");
     const [newPhone, setNewPhone] = useState("");
+    const [filter, setFilter] = useState("");
+    const [persons, setPersons] = useState([
+        { name: "Arto Hellas", number: "040-123456", id: 1 },
+        { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+        { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+        { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+    ]);
+
+    let filteredPeople = persons.filter((x) =>
+        x.name.toLowerCase().includes(filter.toLowerCase())
+    );
 
     const addNumberHandler = (event) => {
         event.preventDefault();
@@ -19,7 +27,7 @@ const App = () => {
 
         const newNameObj = {
             name: newName,
-            phone: newPhone,
+            number: newPhone,
         };
 
         setPersons(persons.concat(newNameObj));
@@ -35,13 +43,22 @@ const App = () => {
         setNewPhone(event.target.value);
     };
 
+    const setFilterHandler = (event) => {
+        setFilter(event.target.value);
+    };
+
     return (
         <div>
-            <h2>Phonebook</h2>
+            <h1>Phonebook</h1>
+            <div>
+                <label htmlFor="filter">filter shown with: </label>
+                <input id="filter" value={filter} onChange={setFilterHandler} />
+            </div>
+            <h2>add a new</h2>
             <form onSubmit={addNumberHandler}>
                 <div>
                     <div>
-                        <label for="name">name: </label>
+                        <label htmlFor="name">name: </label>
                         <input
                             id="name"
                             value={newName}
@@ -50,7 +67,7 @@ const App = () => {
                     </div>
 
                     <div>
-                        <label for="phone">phone: </label>
+                        <label htmlFor="phone">phone: </label>
                         <input
                             id="phone"
                             value={newPhone}
@@ -62,12 +79,10 @@ const App = () => {
                     <button type="submit">add</button>
                 </div>
             </form>
-
             <h2>Numbers</h2>
-
-            {persons.map((x) => (
+            {filteredPeople.map((x) => (
                 <p key={nanoid()}>
-                    {x.name} {x.phone}
+                    {x.name} {x.number}
                 </p>
             ))}
         </div>
