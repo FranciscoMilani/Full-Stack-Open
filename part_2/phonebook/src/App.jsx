@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { nanoid } from "nanoid";
+import SearchFilter from "./components/SearchFilter";
+import PersonAdd from "./components/PersonAdd";
+import PersonList from "./components/PersonList";
 
 const App = () => {
     const [newName, setNewName] = useState("");
@@ -50,41 +52,22 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
-            <div>
-                <label htmlFor="filter">filter shown with: </label>
-                <input id="filter" value={filter} onChange={setFilterHandler} />
-            </div>
-            <h2>add a new</h2>
-            <form onSubmit={addNumberHandler}>
-                <div>
-                    <div>
-                        <label htmlFor="name">name: </label>
-                        <input
-                            id="name"
-                            value={newName}
-                            onChange={setNewNameHandler}
-                        />
-                    </div>
 
-                    <div>
-                        <label htmlFor="phone">phone: </label>
-                        <input
-                            id="phone"
-                            value={newPhone}
-                            onChange={setNewPhoneHandler}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <SearchFilter filter={filter} handler={setFilterHandler} />
+
+            <h2>Add a new</h2>
+
+            <PersonAdd
+                numberHandler={addNumberHandler}
+                phoneHandler={setNewPhoneHandler}
+                nameHandler={setNewNameHandler}
+                newName={newName}
+                newPhone={newPhone}
+            />
+
             <h2>Numbers</h2>
-            {filteredPeople.map((x) => (
-                <p key={nanoid()}>
-                    {x.name} {x.number}
-                </p>
-            ))}
+
+            <PersonList filteredPeople={filteredPeople} />
         </div>
     );
 };
