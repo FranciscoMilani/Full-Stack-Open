@@ -30,14 +30,18 @@ const App = () => {
             return;
         }
 
-        const newNameObj = {
+        const newPerson = {
             name: newName,
             number: newPhone,
         };
 
-        setPersons(persons.concat(newNameObj));
-        setNewName("");
-        setNewPhone("");
+        axios
+            .post("http://localhost:3001/persons", newPerson)
+            .then((response) => {
+                setPersons(persons.concat(response.data));
+                setNewName("");
+                setNewPhone("");
+            });
     };
 
     const setNewNameHandler = (event) => {
