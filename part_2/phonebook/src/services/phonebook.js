@@ -12,7 +12,13 @@ const create = (newEntry) => {
     return promise.then((response) => response.data);
 };
 
+const deleteEntity = (id) => {
+    const promise = axios.delete(`${url}/${id}`);
+    return promise.then((response) => response.data);
+};
+
 export default {
     getAll,
     create,
+    deleteEntity,
 };

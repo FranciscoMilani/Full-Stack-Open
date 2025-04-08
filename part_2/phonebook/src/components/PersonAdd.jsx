@@ -4,12 +4,18 @@ const PersonAdd = ({
     numberHandler,
     nameHandler,
     phoneHandler,
+    nameRef,
 }) => (
     <form onSubmit={numberHandler}>
         <div>
             <div>
                 <label htmlFor="name">name: </label>
-                <input id="name" value={newName} onChange={nameHandler} />
+                <input
+                    id="name"
+                    value={newName}
+                    onChange={nameHandler}
+                    ref={nameRef}
+                />
             </div>
             <div>
                 <label htmlFor="phone">phone: </label>

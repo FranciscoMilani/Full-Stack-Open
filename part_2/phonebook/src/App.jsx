@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useRef } from "react";
 
 import SearchFilter from "./components/SearchFilter";
 import PersonAdd from "./components/PersonAdd";
@@ -12,12 +11,14 @@ const App = () => {
     const [filter, setFilter] = useState("");
     const [persons, setPersons] = useState([]);
 
+    const nameRef = useRef(null);
+
     useEffect(() => {
         phonebook.getAll().then((data) => setPersons(data));
     }, []);
 
     let filteredPeople = persons.filter((x) =>
-        x.name.toLowerCase().includes(filter.toLowerCase())
+        x.name?.toLowerCase().includes(filter.toLowerCase())
     );
 
     const addNumberHandler = (event) => {
@@ -54,6 +55,14 @@ const App = () => {
         setFilter(event.target.value);
     };
 
+    const deleteEntryHandler = (id, name) => {
+        if (window.confirm(`Delete ${name}`)) {
+            phonebook.deleteEntity(id);
+            setPersons(persons.filter((x) => x.id != id));
+            nameRef.current.focus();
+        }
+    };
+
     return (
         <div>
             <h1>Phonebook</h1>
@@ -68,11 +77,15 @@ const App = () => {
                 nameHandler={setNewNameHandler}
                 newName={newName}
                 newPhone={newPhone}
+                nameRef={nameRef}
             />
 
             <h2>Numbers</h2>
 
-            <PersonList filteredPeople={filteredPeople} />
+            <PersonList
+                filteredPeople={filteredPeople}
+                deleteHandler={deleteEntryHandler}
+            />
         </div>
     );
 };

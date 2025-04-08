@@ -1,9 +1,13 @@
 import { nanoid } from "nanoid";
 import PersonDetail from "./PersonDetail";
 
-const PersonList = ({ filteredPeople }) => {
+const PersonList = ({ filteredPeople, deleteHandler }) => {
     return filteredPeople.map((x) => (
-        <PersonDetail key={nanoid()} person={x}></PersonDetail>
+        <PersonDetail
+            key={nanoid()}
+            person={x}
+            deleteHandler={deleteHandler}
+        ></PersonDetail>
     ));
 };
 
