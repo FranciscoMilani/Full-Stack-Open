@@ -26,21 +26,38 @@ const App = () => {
 
         if (!newName) return;
 
-        if (persons.some((x) => x.name === newName)) {
-            alert(`${newName} is already added to phonebook`);
-            return;
-        }
-
         const newEntry = {
             name: newName,
             number: newPhone,
         };
 
-        phonebook.create(newEntry).then((data) => {
-            setPersons(persons.concat(data));
-            setNewName("");
-            setNewPhone("");
-        });
+        const existingName = persons.find((x) => x.name === newName);
+        if (existingName) {
+            if (
+                window.confirm(
+                    `${newName} is already added to phonebook, replace the old number with a new one?`
+                )
+            ) {
+                phonebook
+                    .update(existingName.id, newEntry)
+                    .then((updatedPerson) => {
+                        const existingIndex = persons.findIndex(
+                            (x) => x.id === existingName.id
+                        );
+
+                        persons[existingIndex] = updatedPerson;
+                        const newPersonList = [...persons];
+                        setPersons(newPersonList);
+                    });
+            }
+        } else {
+            phonebook.create(newEntry).then((data) => {
+                setPersons(persons.concat(data));
+            });
+        }
+
+        setNewName("");
+        setNewPhone("");
     };
 
     const setNewNameHandler = (event) => {

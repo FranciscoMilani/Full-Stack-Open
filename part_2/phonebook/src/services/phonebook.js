@@ -17,8 +17,14 @@ const deleteEntity = (id) => {
     return promise.then((response) => response.data);
 };
 
+const update = (id, newEntity) => {
+    const promise = axios.put(`${url}/${id}`, newEntity);
+    return promise.then((response) => response.data);
+};
+
 export default {
     getAll,
     create,
     deleteEntity,
+    update,
 };
