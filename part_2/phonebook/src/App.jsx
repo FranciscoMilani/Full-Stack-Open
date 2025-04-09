@@ -4,12 +4,14 @@ import SearchFilter from "./components/SearchFilter";
 import PersonAdd from "./components/PersonAdd";
 import PersonList from "./components/PersonList";
 import phonebook from "./services/phonebook";
+import Notification from "./components/Notification";
 
 const App = () => {
     const [newName, setNewName] = useState("");
     const [newPhone, setNewPhone] = useState("");
     const [filter, setFilter] = useState("");
     const [persons, setPersons] = useState([]);
+    const [notification, setNotification] = useState(null);
 
     const nameRef = useRef(null);
 
@@ -48,11 +50,15 @@ const App = () => {
                         persons[existingIndex] = updatedPerson;
                         const newPersonList = [...persons];
                         setPersons(newPersonList);
+                        updateNotification(
+                            `${updatedPerson.name}'s number was updated to ${updatedPerson.number}!`
+                        );
                     });
             }
         } else {
             phonebook.create(newEntry).then((data) => {
                 setPersons(persons.concat(data));
+                updateNotification(`Person ${newEntry.name} was created!`);
             });
         }
 
@@ -80,9 +86,19 @@ const App = () => {
         }
     };
 
+    const updateNotification = (message) => {
+        setNotification(message);
+
+        setTimeout(() => {
+            setNotification(null);
+        }, 4000);
+    };
+
     return (
         <div>
             <h1>Phonebook</h1>
+
+            <Notification message={notification} />
 
             <SearchFilter filter={filter} handler={setFilterHandler} />
 
