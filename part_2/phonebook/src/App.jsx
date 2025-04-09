@@ -47,11 +47,26 @@ const App = () => {
                             (x) => x.id === existingName.id
                         );
 
-                        persons[existingIndex] = updatedPerson;
-                        const newPersonList = [...persons];
+                        const newPersonList = persons.map((person, index) =>
+                            index === existingIndex ? updatedPerson : person
+                        );
+
                         setPersons(newPersonList);
+
                         updateNotification(
                             `${updatedPerson.name}'s number was updated to ${updatedPerson.number}!`
+                        );
+                    })
+                    .catch(() => {
+                        const newPersonList = persons.filter(
+                            (x) => existingName.id !== x.id
+                        );
+
+                        setPersons(newPersonList);
+
+                        updateNotification(
+                            `The information of ${existingName.name} was already deleted from the server`,
+                            true
                         );
                     });
             }
@@ -86,8 +101,8 @@ const App = () => {
         }
     };
 
-    const updateNotification = (message) => {
-        setNotification(message);
+    const updateNotification = (message, isError = false) => {
+        setNotification({ message, isError });
 
         setTimeout(() => {
             setNotification(null);
@@ -98,7 +113,7 @@ const App = () => {
         <div>
             <h1>Phonebook</h1>
 
-            <Notification message={notification} />
+            <Notification notification={notification} />
 
             <SearchFilter filter={filter} handler={setFilterHandler} />
 
