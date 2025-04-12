@@ -6,6 +6,7 @@ function App() {
     const [country, setCountry] = useState("");
     const [filteredCountries, setFilteredCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState(null);
 
     useEffect(() => {
         countryService.getAll().then((data) => {
@@ -13,7 +14,7 @@ function App() {
         });
     }, []);
 
-    const onChangeHandler = (event) => {
+    const typingHandler = (event) => {
         const raw = event.target.value;
         const str = raw.trim().toLowerCase();
 
@@ -24,7 +25,16 @@ function App() {
         if (str === "") setFilteredCountries([]);
         else setFilteredCountries(filtered);
 
+        setSelectedCountry(null);
         setCountry(raw);
+    };
+
+    const showHandler = (name) => {
+        const countryToShow = filteredCountries
+            .filter((c) => c.name.official === name)
+            .pop();
+
+        setSelectedCountry(countryToShow);
     };
 
     return (
@@ -37,13 +47,15 @@ function App() {
                 <input
                     type="text"
                     value={country}
-                    onChange={onChangeHandler}
+                    onChange={typingHandler}
                 ></input>
             </div>
 
             <CountriesSection
                 country={country}
                 filteredCountries={filteredCountries}
+                showHandler={showHandler}
+                selectedCountry={selectedCountry}
             />
         </>
     );
