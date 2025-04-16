@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import countryService from "./services/countryService";
 import CountriesSection from "./components/CountriesSection";
+import SearchFilter from "./components/SearchFilter";
 
 function App() {
     const [country, setCountry] = useState("");
@@ -39,20 +40,12 @@ function App() {
 
     return (
         <>
-            <div>
-                <p style={{ display: "inline" }}>
-                    Find countries (by official name) &nbsp;
-                </p>
-
-                <input
-                    type="text"
-                    value={country}
-                    onChange={typingHandler}
-                ></input>
-            </div>
+            <SearchFilter
+                country={country}
+                typingHandler={typingHandler}
+            ></SearchFilter>
 
             <CountriesSection
-                country={country}
                 filteredCountries={filteredCountries}
                 showHandler={showHandler}
                 selectedCountry={selectedCountry}

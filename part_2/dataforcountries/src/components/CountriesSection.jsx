@@ -1,14 +1,14 @@
 import CountryDetail from "./CountryDetail";
+import CountryList from "./CountryList";
 
 export default function CountriesSection({
-    country,
     filteredCountries,
     showHandler,
     selectedCountry,
 }) {
+    let content;
     const overLimit = filteredCountries.length > 10;
 
-    let content;
     if (overLimit) {
         content = <p>Too many matches, specify another filter</p>;
     } else if (filteredCountries.length === 1) {
@@ -17,21 +17,10 @@ export default function CountriesSection({
         content = <CountryDetail country={selectedCountry} />;
     } else if (filteredCountries.length > 1) {
         content = (
-            <ul>
-                {filteredCountries.map((x) => (
-                    <div key={x.name.official}>
-                        <li>
-                            {x.name.official}{" "}
-                            <button
-                                style={{ diplay: "inline" }}
-                                onClick={() => showHandler(x.name.official)}
-                            >
-                                Show
-                            </button>
-                        </li>
-                    </div>
-                ))}
-            </ul>
+            <CountryList
+                filteredCountries={filteredCountries}
+                showHandler={showHandler}
+            />
         );
     }
 
