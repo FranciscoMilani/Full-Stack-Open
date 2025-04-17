@@ -1,2 +1,3 @@
 exercises/
 .vscode/settings.json
+**/node_modules/

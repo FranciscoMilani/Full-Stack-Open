@@ -1,0 +1,16 @@
+{
+  "name": "phonebook_backend",
+  "version": "0.0.1",
+  "description": "Phonebook backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "author": "Francisco Milani",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
