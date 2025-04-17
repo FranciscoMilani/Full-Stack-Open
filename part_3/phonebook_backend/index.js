@@ -30,6 +30,19 @@ app.get("/", (request, response) => {
     response.end();
 });
 
+app.get("/info", (request, response) => {
+    const bookLength = notes.length;
+    const utcDate = new Date();
+
+    const html = `
+		<p>Phonebook has info for ${bookLength} people</p>
+		<p>${utcDate}</p>
+	`;
+
+    response.send(html);
+});
+
+// --- API REQUESTS ---
 app.get("/api/persons", (request, response) => {
     response.json(notes);
 });
