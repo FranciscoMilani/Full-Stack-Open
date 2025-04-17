@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-const notes = [
+persons = [
     {
         id: "1",
         name: "Arto Hellas",
@@ -31,7 +31,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-    const bookLength = notes.length;
+    const bookLength = persons.length;
     const utcDate = new Date();
 
     const html = `
@@ -44,14 +44,21 @@ app.get("/info", (request, response) => {
 
 // --- API REQUESTS ---
 app.get("/api/persons", (request, response) => {
-    response.json(notes);
+    response.json(persons);
 });
 
 app.get("/api/persons/:id", (request, response) => {
     const id = request.params.id;
-    const note = notes.find((x) => x.id === id);
+    const person = persons.find((x) => x.id === id);
 
-    note ? response.json(note) : response.status(404).end();
+    person ? response.json(person) : response.status(404).end();
+});
+
+app.delete("/api/persons/:id", (request, response) => {
+    const id = request.params.id;
+    persons = persons.filter((x) => x.id !== id);
+
+    response.status(204).end();
 });
 
 const PORT = 3001;
