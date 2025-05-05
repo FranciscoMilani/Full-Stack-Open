@@ -1,16 +1,27 @@
 {
-  "name": "phonebook_backend",
-  "version": "0.0.1",
-  "description": "Phonebook backend",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "node --watch index.js"
-  },
-  "author": "Francisco Milani",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^5.1.0"
-  }
+    "name": "phonebook_backend",
+    "version": "0.0.1",
+    "description": "Phonebook backend",
+    "author": "Francisco Milani",
+    "license": "ISC",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js",
+        "dev": "node --watch index.js"
+    },
+    "dependencies": {
+        "express": "^5.1.0"
+    },
+    "devDependencies": {
+        "@antfu/eslint-config": "^4.12.0",
+        "@eslint/css": "^0.7.0",
+        "@eslint/js": "^9.24.0",
+        "@eslint/json": "^0.12.0",
+        "@eslint/markdown": "^6.4.0",
+        "@stylistic/eslint-plugin-js": "^4.2.0",
+        "eslint": "^9.24.0",
+        "eslint-plugin-react": "^7.37.5",
+        "globals": "^16.0.0"
+    }
 }
