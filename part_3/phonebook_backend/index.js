@@ -5,6 +5,15 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(requestLogger);
+
+function requestLogger(request, response, next) {
+    if (request.method === "POST") {
+        console.log(JSON.stringify(request.body));
+    }
+
+    next();
+}
 
 let persons = [{
     id: "1",
