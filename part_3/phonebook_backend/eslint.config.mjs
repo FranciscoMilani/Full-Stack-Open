@@ -5,6 +5,5 @@ export default antfu({
         indent: 4,
         quotes: "double",
         semi: true,
-        allowIndentationTabs: true,
     },
 });
