@@ -1,10 +1,13 @@
 import axios from "axios";
 
-const url = "http://localhost:3001/persons";
+const url = "/api/persons";
 
 const getAll = () => {
     const promise = axios.get(url);
-    return promise.then((response) => response.data);
+    return promise.then((response) => {
+        const data = response.data;
+        return Array.isArray(data) ? data : data.persons ?? [];
+    });
 };
 
 const create = (newEntry) => {
