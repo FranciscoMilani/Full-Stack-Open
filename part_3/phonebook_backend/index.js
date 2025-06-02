@@ -5,9 +5,9 @@ const morgan = require("morgan");
 const app = express();
 
 app.use(express.json());
+app.use(express.static("dist"));
 app.use(morgan("tiny"));
 app.use(requestLogger);
-app.use(express.static("dist"));
 
 function requestLogger(request, response, next) {
     if (request.method === "POST") {
